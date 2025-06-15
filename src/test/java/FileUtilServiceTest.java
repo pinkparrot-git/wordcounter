@@ -1,50 +1,35 @@
 import org.junit.jupiter.api.Test;
+import service.FileUtilService;
+import service.IFileUtilService;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FileUtilServiceTest {
-
-    private final FileUtilService fileUtilService = new FileUtilService();
-
-    public FileUtilServiceTest() throws IOException {
-    }
+    private final IFileUtilService fileUtilService = new FileUtilService();
+    private final String stopWordsFilePath = "stopwords.txt";
 
 
     @Test
-    void testConvertFileToSetReturnsCorrectStopWords() throws IOException {
-        Set<String> stopWords = fileUtilService.convertFileToSet();
+    void shouldLoadStopWords() {
+        Set<String> stopWords = fileUtilService.loadWordsFromFile(stopWordsFilePath);
 
         assertNotNull(stopWords, "stopWords should not be null");
         assertFalse(stopWords.isEmpty(), "stopWords should not be empty");
 
-        assertTrue(stopWords.contains("the"));
+        assertEquals(4, stopWords.size());
+    }
+
+    @Test
+    void shouldDistinguishWordsBasedOnCase() {
+        Set<String> stopWords = fileUtilService.loadWordsFromFile(stopWordsFilePath);
+
         assertTrue(stopWords.contains("and"));
-        assertTrue(stopWords.contains("or"));
+        assertTrue(stopWords.contains("AND"));
 
-        assertEquals(6, stopWords.size());
-    }
-
-    @Test
-    void testConvertFileToSetReturnsStopWordsInLowerCase() throws IOException {
-        Set<String> stopWords = fileUtilService.convertFileToSet();
-
-        assertTrue(stopWords.contains("the"));
-        assertFalse(stopWords.contains("The"));
-    }
-
-    @Test
-    void testStopWordsFilePathIsLoadedFromProperties() throws IOException, NoSuchFieldException, IllegalAccessException {
-        FileUtilService fileUtilService = new FileUtilService();
-
-        Field pathField = FileUtilService.class.getDeclaredField("stopWordsFilePath");
-        pathField.setAccessible(true);
-        String actualPath = (String) pathField.get(fileUtilService);
-
-        assertEquals("stopwords.txt", actualPath);
+        assertFalse(stopWords.contains("a"));
+        assertTrue(stopWords.contains("A"));
     }
 
 }
