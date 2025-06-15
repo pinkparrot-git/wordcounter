@@ -11,6 +11,8 @@ It is written in Java-17
 - Prompts the user to input text and returns the number of valid words.
 - Ignores non-alphabetic characters when determining what counts as a word.
 - Treats multiple spaces as a single delimiter.
+- Excludes configurable stopwords (e.g., "a", "and", "or").
+- Configurable case sensitivity option for word matching and filtering.
 - Allows the user to type `'exit'` to quit the application.
 - Includes unit tests for core logic.
 
@@ -29,6 +31,10 @@ You can modify this file to customize which words are ignored.
 The file path for the stopwords list is configured in application.properties:
 
 stopwords.file.path=stopwords.txt
+
+By default this stopwords are not case sensitive.
+You can enable case-sensitivity by setting it's configuration `'case.sensitive=true'` in application.properties file.
+
 
 ## Example
 
@@ -54,9 +60,18 @@ Number of words: 2
 ├── src
 │   ├── main
 │   │   ├── java
+│   │   │   ├── configuration
+│   │   │   │   └── WordCounterConfiguration.java
+│   │   │   ├── exception
+│   │   │   │   └── ConfigurationLoadException.java
+│   │   │   │   └── FileLoadingException.java
+│   │   │   ├── service
+│   │   │   │   └── FileUtilService.java
+│   │   │   │   └── IFileUtilService.java
+│   │   │   │   └── WordCounterService.java
+│   │   │   │   └── IWordCounterService.java
+│   │   │   │   └── WordCounterFactory.java
 │   │   │   └── WordCounterApp.java
-│   │   │   └── WordCounterService.java
-│   │   │   └── FileUtilService.java
 │   │   └── resources
 │   │       └── application.properties
 │   │       └── stopwords.txt
@@ -64,6 +79,7 @@ Number of words: 2
 │       ├── java
 │       │   └── WordCounterTest.java
 │       │   └── FileUtilServiceTest.java
+│       │   └── WordCounterConfigurationTest.java
 │       └── resources
 │           └── application.properties
 │           └── stopwords.txt
