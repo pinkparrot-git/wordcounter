@@ -1,9 +1,3 @@
-the
-a
+A
 an
-and
-
-
-THE
-Or OR
-TeSt
+and  AND
