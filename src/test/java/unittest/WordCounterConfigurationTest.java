@@ -1,3 +1,5 @@
+package unittest;
+
 import configuration.WordCounterConfiguration;
 import org.junit.jupiter.api.Test;
 

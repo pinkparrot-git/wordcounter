@@ -1,13 +1,11 @@
+package unittest;
+
 import configuration.WordCounterConfiguration;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.IFileUtilService;
 import service.WordCounterFactory;
 import service.WordCounterService;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,14 +15,14 @@ import static org.mockito.Mockito.when;
 
 public class WordCounterServiceTest {
     private static final IFileUtilService fileUtilService = mock(IFileUtilService.class);
-    private static final Set<String> stopWords = new HashSet<>(Arrays.asList("A", "an", "or", "and", "AND"));
+    private static final String stopWords = "A an or and AND";
 
     private WordCounterService wordCounter;
     private WordCounterConfiguration configuration;
 
-    @BeforeAll
-    static void init() {
-        when(fileUtilService.loadWordsFromFile(anyString())).thenReturn(stopWords);
+    @BeforeEach
+    void setup() {
+        when(fileUtilService.loadTextFromFile(anyString())).thenReturn(stopWords);
     }
 
     void initializeWordCounter(boolean caseSensitive) {
