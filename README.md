@@ -7,7 +7,7 @@ It supports words filtering and an optional case sensitivity feature via configu
 
 ## Features
 
-- Counts the number of valid words in input text.
+- Counts and returns the number of valid words of a given text.
 - Ignores non-alphabetic characters when determining what counts as a word.
 - Treats multiple spaces as a single delimiter.
 - Excludes configurable stopwords (e.g., "a", "and", "or").
