@@ -1,20 +1,23 @@
 # word-counter
 
-An application that counts the number of words in a given text.
-When the application starts, it prompts the user to enter text, then displays the number of words found.
-It is written in Java-17
-
+**WordCounterApp** 
+A Java-17 console application that counts the number of *valid* words in a given text.  
+It supports words filtering and an optional case sensitivity feature via configuration.
 
 
 ## Features
 
-- Prompts the user to input text and returns the number of valid words.
+- Counts and returns the number of valid words of a given text.
 - Ignores non-alphabetic characters when determining what counts as a word.
 - Treats multiple spaces as a single delimiter.
 - Excludes configurable stopwords (e.g., "a", "and", "or").
+- Can read input from a `.txt` file passed as a command-line argument.
+- Falls back to manual console input if no file is provided or if file reading fails.
 - Configurable case sensitivity option for word matching and filtering.
 - Allows the user to type `'exit'` to quit the application.
 - Includes unit tests for core logic.
+- Friendly and formatted console UI.
+
 
 ## Stop Words
 The application ignores the following stop words to provide a more meaningful word count:
@@ -71,17 +74,25 @@ Number of words: 2
 │   │   │   │   └── WordCounterService.java
 │   │   │   │   └── IWordCounterService.java
 │   │   │   │   └── WordCounterFactory.java
+│   │   │   ├── ui
+│   │   │   │   └── ConsoleWordCounterUI.java
+│   │   │   │   └── IConsoleWordCounterUI.java
 │   │   │   └── WordCounterApp.java
 │   │   └── resources
 │   │       └── application.properties
+│   │       └── mytext.txt
 │   │       └── stopwords.txt
 │   └── test
 │       ├── java
-│       │   └── WordCounterTest.java
-│       │   └── FileUtilServiceTest.java
-│       │   └── WordCounterConfigurationTest.java
+│       │   └── integration
+│       │   │   └── WordCounterIntegrationTest.java
+│       │   └── unittest
+│       │       └── WordCounterTest.java
+│       │       └── FileUtilServiceTest.java
+│       │       └── WordCounterConfigurationTest.java
 │       └── resources
 │           └── application.properties
+│           └── mytext.txt
 │           └── stopwords.txt
 ├── pom.xml
 └── README.md
