@@ -1,40 +1,37 @@
 import configuration.WordCounterConfiguration;
-import service.*;
-
-import java.util.Scanner;
+import service.FileUtilService;
+import service.IFileUtilService;
+import service.IWordCounterService;
+import service.WordCounterFactory;
+import ui.ConsoleWordCounterUI;
+import ui.IConsoleWordCounterUI;
 
 public class WordCounterApp {
-    private final IWordCounterService wordCounter;
+    private final IConsoleWordCounterUI counterUI;
 
-    private WordCounterApp(IWordCounterService wordCounter) {
-        this.wordCounter = wordCounter;
+    private WordCounterApp(IConsoleWordCounterUI counterUI) {
+        this.counterUI = counterUI;
     }
+
     public static void main(String[] args) {
+        WordCounterApp app = configureApp();
+        app.startConsoleApp(args);
+    }
+
+    private static WordCounterApp configureApp() {
         IFileUtilService fileUtilService = new FileUtilService();
         WordCounterConfiguration configuration = WordCounterConfiguration.loadConfiguration();
-        WordCounterService wordCounter = WordCounterFactory.create(fileUtilService, configuration);
-        new WordCounterApp(wordCounter).startConsoleApp();
+        IWordCounterService wordCounter = WordCounterFactory.create(fileUtilService, configuration);
+        IConsoleWordCounterUI counterUI = new ConsoleWordCounterUI(fileUtilService, wordCounter);
+        return new WordCounterApp(counterUI);
     }
 
-    private void startConsoleApp(){
-        System.out.println( "\n" +
-            "************************************************************\n" +
-            "* Welcome to WordCounterApp!                               *\n" +
-            "* Type a sentence and I'll count the *real* words for you. *\n" +
-            "* Type 'exit' to make me stop counting.                    *\n" +
-            "************************************************************\n");
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("Enter text: ");
-            String input = scanner.nextLine();
-            if ("exit".equalsIgnoreCase(input.trim())) {
-                System.out.println("See you soon!");
-                break;
-            }
-            int wordCount = wordCounter.countValidWords(input);
-            System.out.println("Number of words: " + wordCount);
-            System.out.println("------------------- ");
+    private void startConsoleApp(String[] args) {
+        if (args.length > 0) {
+            counterUI.processFileInput(args[0]);
+        } else {
+            counterUI.consoleInputBanner();
+            counterUI.processConsoleInput();
         }
     }
 }

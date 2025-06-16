@@ -2,9 +2,11 @@ package service;
 
 import configuration.WordCounterConfiguration;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class WordCounterService implements IWordCounterService {
     private final IFileUtilService fileUtilService;
@@ -43,8 +45,12 @@ public class WordCounterService implements IWordCounterService {
     }
 
     private Set<String> normalizeStopWords() {
-        Set<String> stopWords = fileUtilService.loadWordsFromFile(stopWordsFilePath);
-        return caseSensitive ? stopWords : stopWords.stream().map(String::toLowerCase).collect(Collectors.toSet());
+        String fileContent = fileUtilService.loadTextFromFile(stopWordsFilePath);
+        Stream<String> words = Arrays.stream(fileContent.trim().split("\\s+"));
+        if (!caseSensitive) {
+            words = words.map(String::toLowerCase);
+        }
+        return words.collect(Collectors.toSet());
     }
 
     public void initialize() {
