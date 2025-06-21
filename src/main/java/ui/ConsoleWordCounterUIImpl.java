@@ -9,11 +9,11 @@ import java.util.Scanner;
 
 public class ConsoleWordCounterUIImpl implements ConsoleWordCounterUI {
     private final WordCounterService wordCounter;
-    private final FileService fileUtilService;
+    private final FileService fileService;
 
 
-    public ConsoleWordCounterUIImpl(FileService fileUtilService, WordCounterService wordCounter) {
-        this.fileUtilService = fileUtilService;
+    public ConsoleWordCounterUIImpl(FileService fileService, WordCounterService wordCounter) {
+        this.fileService = fileService;
         this.wordCounter = wordCounter;
     }
 
@@ -22,7 +22,7 @@ public class ConsoleWordCounterUIImpl implements ConsoleWordCounterUI {
             if (!fileName.contains(".txt")) {
                 throw new FileLoadingException("File extension is not valid.");
             }
-            String fileContent = fileUtilService.loadTextFromFile(fileName);
+            String fileContent = fileService.loadTextFromFile(fileName);
             int wordCount = wordCounter.countValidWords(fileContent);
 
             printBanner(fileName, "File: ", "Number of words: " + wordCount);

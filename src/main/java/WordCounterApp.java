@@ -19,11 +19,11 @@ public class WordCounterApp {
     }
 
     private static WordCounterApp configureApp() {
-        FileService fileUtilService = new FileServiceImpl();
+        FileService fileService = new FileServiceImpl();
         WordCounterConfiguration configuration = WordCounterConfiguration.loadConfiguration();
-        WordCounterService wordCounter = new WordCounterServiceImpl(fileUtilService, configuration);
+        WordCounterService wordCounter = new WordCounterServiceImpl(fileService, configuration);
         wordCounter.initialize();
-        ConsoleWordCounterUI counterUI = new ConsoleWordCounterUIImpl(fileUtilService, wordCounter);
+        ConsoleWordCounterUI counterUI = new ConsoleWordCounterUIImpl(fileService, wordCounter);
         return new WordCounterApp(counterUI);
     }
 
