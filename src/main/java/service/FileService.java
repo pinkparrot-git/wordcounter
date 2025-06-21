@@ -1,6 +1,6 @@
 package service;
 
-public interface IFileUtilService {
+public interface FileService {
 
     String loadTextFromFile(String filePath);
 

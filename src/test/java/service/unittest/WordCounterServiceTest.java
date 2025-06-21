@@ -1,11 +1,10 @@
-package unittest;
+package service.unittest;
 
 import configuration.WordCounterConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import service.IFileUtilService;
-import service.WordCounterFactory;
-import service.WordCounterService;
+import service.FileService;
+import service.WordCounterServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -14,20 +13,21 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class WordCounterServiceTest {
-    private static final IFileUtilService fileUtilService = mock(IFileUtilService.class);
+    private static final FileService fileService = mock(FileService.class);
     private static final String stopWords = "A an or and AND";
 
-    private WordCounterService wordCounter;
+    private WordCounterServiceImpl wordCounter;
     private WordCounterConfiguration configuration;
 
     @BeforeEach
     void setup() {
-        when(fileUtilService.loadTextFromFile(anyString())).thenReturn(stopWords);
+        when(fileService.loadTextFromFile(anyString())).thenReturn(stopWords);
     }
 
     void initializeWordCounter(boolean caseSensitive) {
         configuration = new WordCounterConfiguration("[a-zA-Z]*", "stopwords.txt", caseSensitive);
-        wordCounter = WordCounterFactory.create(fileUtilService, configuration);
+        wordCounter = new WordCounterServiceImpl(fileService, configuration);
+        wordCounter.initialize();
     }
 
 
@@ -83,7 +83,8 @@ public class WordCounterServiceTest {
     @Test
     void shouldCreateWordCounterService() {
         initializeWordCounter(false);
-        WordCounterService service = WordCounterFactory.create(fileUtilService, configuration);
+        WordCounterServiceImpl service = new WordCounterServiceImpl(fileService, configuration);
+        wordCounter.initialize();
         assertNotNull(service);
     }
 }

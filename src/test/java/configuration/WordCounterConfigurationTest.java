@@ -1,6 +1,5 @@
-package unittest;
+package configuration;
 
-import configuration.WordCounterConfiguration;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

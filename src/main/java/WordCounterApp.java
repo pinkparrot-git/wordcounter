@@ -1,15 +1,15 @@
 import configuration.WordCounterConfiguration;
-import service.FileUtilService;
-import service.IFileUtilService;
-import service.IWordCounterService;
-import service.WordCounterFactory;
+import service.FileServiceImpl;
+import service.FileService;
+import service.WordCounterService;
+import service.WordCounterServiceImpl;
+import ui.ConsoleWordCounterUIImpl;
 import ui.ConsoleWordCounterUI;
-import ui.IConsoleWordCounterUI;
 
 public class WordCounterApp {
-    private final IConsoleWordCounterUI counterUI;
+    private final ConsoleWordCounterUI counterUI;
 
-    private WordCounterApp(IConsoleWordCounterUI counterUI) {
+    private WordCounterApp(ConsoleWordCounterUI counterUI) {
         this.counterUI = counterUI;
     }
 
@@ -19,10 +19,11 @@ public class WordCounterApp {
     }
 
     private static WordCounterApp configureApp() {
-        IFileUtilService fileUtilService = new FileUtilService();
+        FileService fileService = new FileServiceImpl();
         WordCounterConfiguration configuration = WordCounterConfiguration.loadConfiguration();
-        IWordCounterService wordCounter = WordCounterFactory.create(fileUtilService, configuration);
-        IConsoleWordCounterUI counterUI = new ConsoleWordCounterUI(fileUtilService, wordCounter);
+        WordCounterService wordCounter = new WordCounterServiceImpl(fileService, configuration);
+        wordCounter.initialize();
+        ConsoleWordCounterUI counterUI = new ConsoleWordCounterUIImpl(fileService, wordCounter);
         return new WordCounterApp(counterUI);
     }
 
