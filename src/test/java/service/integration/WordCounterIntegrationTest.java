@@ -11,22 +11,22 @@ import service.WordCounterServiceImpl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WordCounterIntegrationTest {
-    private FileService fileUtilService;
+    private FileService fileService;
     private WordCounterService wordCounter;
 
     @BeforeEach
     void setup() {
-        fileUtilService = new FileServiceImpl();
+        fileService = new FileServiceImpl();
         WordCounterConfiguration configuration = new WordCounterConfiguration(
                 "[a-zA-Z]*", "stopwords.txt", false);
 
-        wordCounter = new WordCounterServiceImpl(fileUtilService, configuration);
+        wordCounter = new WordCounterServiceImpl(fileService, configuration);
         wordCounter.initialize();
     }
 
     @Test
     void shouldCountWordsCorrectlyIgnoringStopWords() {
-        String content = fileUtilService.loadTextFromFile("mytext.txt");
+        String content = fileService.loadTextFromFile("mytext.txt");
         assertEquals(content, "Mary had\n" +
                         "a little\n" +
                         "lamb",

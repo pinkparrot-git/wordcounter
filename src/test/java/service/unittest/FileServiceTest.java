@@ -7,11 +7,11 @@ import service.FileServiceImpl;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FileServiceTest {
-    private final FileServiceImpl fileUtilService = new FileServiceImpl();
+    private final FileServiceImpl fileService = new FileServiceImpl();
 
     @Test
     void shouldLoadTextFromFileSuccessfully() {
-        String fileContent = fileUtilService.loadTextFromFile("mytext.txt");
+        String fileContent = fileService.loadTextFromFile("mytext.txt");
         assertEquals("Mary had\n" +
                 "a little\n" +
                 "lamb", fileContent.trim());
@@ -21,7 +21,7 @@ public class FileServiceTest {
     void shouldThrowExceptionWhenFilePathIsNull() {
         FileLoadingException exception = assertThrows(
                 FileLoadingException.class,
-                () -> fileUtilService.loadTextFromFile(null)
+                () -> fileService.loadTextFromFile(null)
         );
         assertTrue(exception.getMessage().contains("File path is empty"));
     }
@@ -30,7 +30,7 @@ public class FileServiceTest {
     void shouldThrowExceptionWhenFilePathIsBlank() {
         FileLoadingException exception = assertThrows(
                 FileLoadingException.class,
-                () -> fileUtilService.loadTextFromFile("   ")
+                () -> fileService.loadTextFromFile("   ")
         );
         assertTrue(exception.getMessage().contains("File path is empty"));
     }
@@ -39,7 +39,7 @@ public class FileServiceTest {
     void shouldThrowExceptionWhenFileNotFound() {
         FileLoadingException exception = assertThrows(
                 FileLoadingException.class,
-                () -> fileUtilService.loadTextFromFile("anothertext.txt")
+                () -> fileService.loadTextFromFile("anothertext.txt")
         );
         assertTrue(exception.getMessage().contains("File not found"));
     }

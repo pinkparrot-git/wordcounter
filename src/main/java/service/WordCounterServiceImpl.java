@@ -9,14 +9,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class WordCounterServiceImpl implements WordCounterService {
-    private final FileService fileUtilService;
+    private final FileService fileService;
     private final String regex;
     private final boolean caseSensitive;
     private final String stopWordsFilePath;
     private Set<String> stopWords;
 
-    public WordCounterServiceImpl(FileService fileUtilService, WordCounterConfiguration configuration) {
-        this.fileUtilService = fileUtilService;
+    public WordCounterServiceImpl(FileService fileService, WordCounterConfiguration configuration) {
+        this.fileService = fileService;
         this.regex = configuration.getWordPattern();
         this.caseSensitive = configuration.isCaseSensitive();
         this.stopWordsFilePath = configuration.getStopWordsFilePath();
@@ -45,7 +45,7 @@ public class WordCounterServiceImpl implements WordCounterService {
     }
 
     private Set<String> normalizeStopWords() {
-        String fileContent = fileUtilService.loadTextFromFile(stopWordsFilePath);
+        String fileContent = fileService.loadTextFromFile(stopWordsFilePath);
         Stream<String> words = Arrays.stream(fileContent.trim().split("\\s+"));
         if (!caseSensitive) {
             words = words.map(String::toLowerCase);

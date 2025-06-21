@@ -13,7 +13,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class WordCounterServiceTest {
-    private static final FileService fileUtilService = mock(FileService.class);
+    private static final FileService fileService = mock(FileService.class);
     private static final String stopWords = "A an or and AND";
 
     private WordCounterServiceImpl wordCounter;
@@ -21,12 +21,12 @@ public class WordCounterServiceTest {
 
     @BeforeEach
     void setup() {
-        when(fileUtilService.loadTextFromFile(anyString())).thenReturn(stopWords);
+        when(fileService.loadTextFromFile(anyString())).thenReturn(stopWords);
     }
 
     void initializeWordCounter(boolean caseSensitive) {
         configuration = new WordCounterConfiguration("[a-zA-Z]*", "stopwords.txt", caseSensitive);
-        wordCounter = new WordCounterServiceImpl(fileUtilService, configuration);
+        wordCounter = new WordCounterServiceImpl(fileService, configuration);
         wordCounter.initialize();
     }
 
@@ -83,7 +83,7 @@ public class WordCounterServiceTest {
     @Test
     void shouldCreateWordCounterService() {
         initializeWordCounter(false);
-        WordCounterServiceImpl service = new WordCounterServiceImpl(fileUtilService, configuration);
+        WordCounterServiceImpl service = new WordCounterServiceImpl(fileService, configuration);
         wordCounter.initialize();
         assertNotNull(service);
     }
