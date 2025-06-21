@@ -1,13 +1,13 @@
-package unittest;
+package service.unittest;
 
 import exception.FileLoadingException;
 import org.junit.jupiter.api.Test;
-import service.FileUtilService;
+import service.FileServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FileUtilServiceTest {
-    private final FileUtilService fileUtilService = new FileUtilService();
+public class FileServiceTest {
+    private final FileServiceImpl fileUtilService = new FileServiceImpl();
 
     @Test
     void shouldLoadTextFromFileSuccessfully() {

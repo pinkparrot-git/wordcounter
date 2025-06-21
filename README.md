@@ -58,7 +58,7 @@ Number of words: 2
 - No external libraries or frameworks (except JUnit for testing)
 
 ## Project Structure
-
+<pre> ```
 .
 ├── src
 │   ├── main
@@ -69,14 +69,13 @@ Number of words: 2
 │   │   │   │   └── ConfigurationLoadException.java
 │   │   │   │   └── FileLoadingException.java
 │   │   │   ├── service
-│   │   │   │   └── FileUtilService.java
-│   │   │   │   └── IFileUtilService.java
+│   │   │   │   └── FileService.java
+│   │   │   │   └── FileServiceImpl.java
 │   │   │   │   └── WordCounterService.java
-│   │   │   │   └── IWordCounterService.java
-│   │   │   │   └── WordCounterFactory.java
+│   │   │   │   └── WordCounterServiceImpl.java
 │   │   │   ├── ui
 │   │   │   │   └── ConsoleWordCounterUI.java
-│   │   │   │   └── IConsoleWordCounterUI.java
+│   │   │   │   └── ConsoleWordCounterUIImpl.java
 │   │   │   └── WordCounterApp.java
 │   │   └── resources
 │   │       └── application.properties
@@ -84,16 +83,19 @@ Number of words: 2
 │   │       └── stopwords.txt
 │   └── test
 │       ├── java
-│       │   └── integration
-│       │   │   └── WordCounterIntegrationTest.java
-│       │   └── unittest
-│       │       └── WordCounterTest.java
-│       │       └── FileUtilServiceTest.java
-│       │       └── WordCounterConfigurationTest.java
+│       │   ├── configuration
+│       │   │   └── WordCounterConfigurationTest.java
+│       │   └── service
+│       │       └── integration
+│       │       │   └── WordCounterIntegrationTest.java
+│       │       └── unittest
+│       │           └── FileServiceTest.java
+│       │           └── WordCounterServiceTest.java
 │       └── resources
 │           └── application.properties
 │           └── mytext.txt
 │           └── stopwords.txt
 ├── pom.xml
 └── README.md
+ ``` </pre>
 

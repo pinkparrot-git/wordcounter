@@ -1,26 +1,27 @@
-package integration;
+package service.integration;
 
 import configuration.WordCounterConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import service.FileUtilService;
-import service.IFileUtilService;
-import service.IWordCounterService;
-import service.WordCounterFactory;
+import service.FileServiceImpl;
+import service.FileService;
+import service.WordCounterService;
+import service.WordCounterServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WordCounterIntegrationTest {
-    private IFileUtilService fileUtilService;
-    private IWordCounterService wordCounter;
+    private FileService fileUtilService;
+    private WordCounterService wordCounter;
 
     @BeforeEach
     void setup() {
-        fileUtilService = new FileUtilService();
+        fileUtilService = new FileServiceImpl();
         WordCounterConfiguration configuration = new WordCounterConfiguration(
                 "[a-zA-Z]*", "stopwords.txt", false);
 
-        wordCounter = WordCounterFactory.create(fileUtilService, configuration);
+        wordCounter = new WordCounterServiceImpl(fileUtilService, configuration);
+        wordCounter.initialize();
     }
 
     @Test

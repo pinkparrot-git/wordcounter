@@ -9,7 +9,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 
-public class FileUtilService implements IFileUtilService {
+public class FileServiceImpl implements FileService {
 
     public String loadTextFromFile(String filePath) {
         if(filePath == null || filePath.isBlank()){
